@@ -18,6 +18,9 @@ public:
 	};
 	vector<char> Delete(FILE, int field_num) {
 	};
+	vector<char> Search(FILE) {
+
+	};
 private:
 
 };
