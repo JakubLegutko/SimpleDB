@@ -32,7 +32,7 @@ public:
 
 	void Read_DB() {
 		 int input_choose_rec;
-		cout << "Popatrz synek, masz sobie tyle rekordow do wybrania, ktory chcesz zobaczyc (wybierz liczbę mniejszą lub równą od wyświetlonej i nacisnij enter) lub wcisnij 0 zeby wyjsc?" << endl;
+		cout << "Popatrz synek, masz sobie tyle rekordow do wybrania, ktory chcesz zobaczyc (wybierz liczbe mniejsza lub rowna od wyświetlonej i nacisnij enter) lub wcisnij 0 zeby wyjsc?" << endl;
 		cout << DB_in_prog.size() << endl;
 		cin >> input_choose_rec;
 		
@@ -98,11 +98,11 @@ public:
 		cin >> present_struct.PESEL;
 		cout << "Podaj imie delikwenta" << endl;
 		cin >> present_struct.imie;
-		cout << "Podaj też jego nazwisko" << endl;
+		cout << "Podaj tez jego nazwisko" << endl;
 		cin >> present_struct.nazwisko;
 		cout << "Podaj tez liczbe bombelkow 500+" << endl;
 		cin >> present_struct.liczba_500_plus;
-		cout << "Przetwarzam dane, proszę czekac...." << endl;
+		cout << "Przetwarzam dane, prosze czekac...." << endl;
 		DB_in_prog.push_back(present_struct);
 	};
 	void Init() {
