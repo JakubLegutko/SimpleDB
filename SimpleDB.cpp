@@ -5,7 +5,7 @@
 #include<fstream>
 #include <conio.h>
 #include<cstdlib>
-
+#include<SFML/Graphics.hpp>
 
 using std::string;
 using std::vector;
@@ -91,8 +91,8 @@ public:
 		}
 	};
 	void Write_Data() {
-		cout << "Podaj wiek" << endl;
 		Dane_pola present_struct;
+		cout << "Podaj wiek" << endl;
 		cin >> present_struct.wiek;
 		cout << "Podaj 11-cyfrowy PESEL" << endl;
 		cin >> present_struct.PESEL;
@@ -107,7 +107,7 @@ public:
 	};
 	void Init() {
 		//LOAD DB
-		cout << "Witaj w nowym systemie informatycznym Pana Prezesa, CHuJOS, sluzacemu jako baza danych potencjalnych wyborcow!" << endl;
+		cout << "Witaj w nowym systemie informatycznym Pana Prezesa, PiSOS, sluzacemu jako baza danych potencjalnych wyborcow!" << endl;
 		cout << "System zostal przyrzadzony przez najlepszych informatykow, wiec baza za kazdym wlaczeniem zmienia kolejnosc rekordow" << endl;
 		cout << "Niechaj chwala bedzie Prezesowi!" << endl;
 		
