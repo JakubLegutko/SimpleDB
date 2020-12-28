@@ -145,7 +145,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AdditionMenu.cpp" />
+    <ClCompile Include="DBDisplayMenu.cpp" />
+    <ClCompile Include="DeletionMenu.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="SimpleDB.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AdditionMenu.h" />
+    <ClInclude Include="DBDisplayMenu.h" />
+    <ClInclude Include="DeletionMenu.h" />
+    <ClInclude Include="MainMenu.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

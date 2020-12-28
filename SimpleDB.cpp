@@ -6,7 +6,11 @@
 #include <conio.h>
 #include<cstdlib>
 #include<SFML/Graphics.hpp>
-
+#include "MainMenu.h"
+#include "DBDisplayMenu.h"
+#include "AdditionMenu.h"
+#include "DeletionMenu.h"
+#include <Windows.h>
 using std::string;
 using std::vector;
 using std::cout;
@@ -104,6 +108,8 @@ public:
 		cin >> present_struct.liczba_500_plus;
 		cout << "Przetwarzam dane, prosze czekac...." << endl;
 		DB_in_prog.push_back(present_struct);
+		Sleep(1000);
+		cout << "Zapisano!" << endl;
 	};
 	void Init() {
 		//LOAD DB
@@ -153,37 +159,24 @@ public:
 		else
 			cout <<'\n' ;
 
-		while (1) {
-			cout << "Co trza robic? 1-czytaj DB,2-dodaj dane do DB, 3-ubij mnie (zapisuje dane do pliku DB.txt), 4-usun rekord :c" << endl;
-			int prog_nav;
-			cin >> prog_nav;
-			switch (prog_nav) {
-			case 1: Read_DB();
-				break;
-			case 2: Write_Data();
-				break;
-			case 4: Delete();
-				break;
-			case 3:
-				std::ofstream out_file;
-				out_file.open("DB.txt");
-				while (DB_in_prog.size()) {
-					Dane_pola it = DB_in_prog.back();
-					out_file << it.wiek << endl;
-					out_file << it.PESEL << endl;
-					out_file << it.imie << endl;
-					out_file << it.nazwisko << endl;
-					out_file << it.liczba_500_plus << endl;
-					
-					DB_in_prog.pop_back();
-				}
-				out_file.close();
-				exit(0);
-			}
-		}
 	}
 
-	
+	void Save_Exit() {
+		std::ofstream out_file;
+		out_file.open("DB.txt");
+		while (DB_in_prog.size()) {
+			Dane_pola it = DB_in_prog.back();
+			out_file << it.wiek << endl;
+			out_file << it.PESEL << endl;
+			out_file << it.imie << endl;
+			out_file << it.nazwisko << endl;
+			out_file << it.liczba_500_plus << endl;
+
+			DB_in_prog.pop_back();
+		}
+		out_file.close();
+		exit(0);
+	}
 	void Delete() {
 		int field_num;
 		cout << "ktory rekord chcesz wywalic? (polecam najpierw sprawdzic ich zawartosc coby niespodzianek nie bylo!" << endl;
@@ -203,11 +196,218 @@ public:
 
 //SimpleDB::~SimpleDB()
 //{
-	
-//}
+//	}
 int main() {
 	SimpleDB DB;
 	DB.Init();
+	enum fsm {
+		MAIN_MENU,
+		DISPLAY_MENU,
+		ADD_MENU,
+		DELETE_MENU
+	};
+	fsm fs = MAIN_MENU;
+	sf::RenderWindow window{ sf::VideoMode{800, 600}, "PiSOS v.21.37" };
+	sf::Event event;
+		DeletionMenu deletemenu(window.getSize().x, window.getSize().y);
+		AdditionMenu addmenu(window.getSize().x, window.getSize().y);
+		MainMenu mainmenu(window.getSize().x, window.getSize().y);
+		DBDisplayMenu displaymenu(window.getSize().x, window.getSize().y);
+		while (window.isOpen()) {
+			if (fs == MAIN_MENU) {
+			window.display();
+			while (window.pollEvent(event)) {
+
+				switch (event.type) {
+				case sf::Event::Closed:
+					window.close();
+					break;
+
+				case sf::Event::KeyReleased:
+					switch (event.key.code)
+					{
+					case sf::Keyboard::Up:
+						mainmenu.MoveUp();
+						break;
+
+					case sf::Keyboard::Down:
+						mainmenu.MoveDown();
+						break;
+					case sf::Keyboard::Return:
+						switch (mainmenu.GetPressedItem())
+						{
+						case 0:
+							cout << "1. button" << endl;
+							fs = DISPLAY_MENU;
+							cout << fs;
+							break;
+						case 1:
+							cout << "2. button" << endl;
+							fs = ADD_MENU;
+							break;
+						case 2:
+							cout << "3. button" << endl;
+							fs = DELETE_MENU;
+							break;
+						case 3:
+							cout << "4. button" << endl;
+							window.close();
+							DB.Save_Exit();
+							break;
+						}
+						break;
+					}
+
+
+
+				}
+
+			}	
+			
+			window.clear();
+			mainmenu.draw(window);
+		}
+		
+
+	if (fs == DISPLAY_MENU) {
+		
+		
+			window.display();
+			while (window.pollEvent(event)) {
+
+				switch (event.type) {
+				case sf::Event::Closed:
+					window.close();
+					break;
+
+				case sf::Event::KeyReleased:
+					switch (event.key.code)
+					{
+					case sf::Keyboard::Up:
+						displaymenu.MoveUp();
+						break;
+
+					case sf::Keyboard::Down:
+						displaymenu.MoveDown();
+						break;
+					case sf::Keyboard::Return:
+						switch (displaymenu.GetPressedItem())
+						{
+						case 0:
+							cout << "1. button in displaymenu" << endl;
+							DB.Read_DB();
+							break;
+						case 1:
+							cout << "2. button" << endl;
+							fs = MAIN_MENU;
+							break;
+
+						}
+						break;
+					}
+
+
+
+				}
+
+			}
+			window.clear();
+			displaymenu.draw(window);
+		}	
+	if (fs == ADD_MENU) {
+
+
+		window.display();
+		while (window.pollEvent(event)) {
+
+			switch (event.type) {
+			case sf::Event::Closed:
+				window.close();
+				break;
+
+			case sf::Event::KeyReleased:
+				switch (event.key.code)
+				{
+				case sf::Keyboard::Up:
+					addmenu.MoveUp();
+					break;
+
+				case sf::Keyboard::Down:
+					addmenu.MoveDown();
+					break;
+				case sf::Keyboard::Return:
+					switch (addmenu.GetPressedItem())
+					{
+					case 0:
+						cout << "1. button in displaymenu" << endl;
+						DB.Write_Data();
+						break;
+					case 1:
+						cout << "2. button" << endl;
+						fs = MAIN_MENU;
+						break;
+
+					}
+					break;
+				}
+
+
+
+			}
+
+		}
+		window.clear();
+		addmenu.draw(window);
+	}
+	if (fs == DELETE_MENU) {
+
+
+		window.display();
+		while (window.pollEvent(event)) {
+
+			switch (event.type) {
+			case sf::Event::Closed:
+				window.close();
+				break;
+
+			case sf::Event::KeyReleased:
+				switch (event.key.code)
+				{
+				case sf::Keyboard::Up:
+					deletemenu.MoveUp();
+					break;
+
+				case sf::Keyboard::Down:
+					deletemenu.MoveDown();
+					break;
+				case sf::Keyboard::Return:
+					switch (deletemenu.GetPressedItem())
+					{
+					case 0:
+						cout << "1. button in deletemenu" << endl;
+						DB.Delete();
+						break;
+					case 1:
+						cout << "2. button" << endl;
+						fs = MAIN_MENU;
+						break;
+
+					}
+					break;
+				}
+
+
+
+			}
+
+		}
+		window.clear();
+		deletemenu.draw(window);
+	}
+	
+}
+
+	
 
 	return 0;
 }
