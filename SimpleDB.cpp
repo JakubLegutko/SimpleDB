@@ -33,13 +33,14 @@ private:
 	vector<Dane_pola> DB_in_prog;
 	
 public:
-
+	int Get_amount_of_records() {
+		return DB_in_prog.size();
+	}
 	void Read_DB() {
 		 int input_choose_rec;
 		cout << "Popatrz synek, masz sobie tyle rekordow do wybrania, ktory chcesz zobaczyc (wybierz liczbe mniejsza lub rowna od wyświetlonej i nacisnij enter) lub wcisnij 0 zeby wyjsc?" << endl;
 		cout << DB_in_prog.size() << endl;
 		cin >> input_choose_rec;
-		
 		while (cin.fail() || input_choose_rec > DB_in_prog.size() || input_choose_rec < 0) {
 			std::cout << "Error" << std::endl;
 			std::cin.clear();
@@ -200,6 +201,7 @@ public:
 int main() {
 	SimpleDB DB;
 	DB.Init();
+	string amount_of_records;
 	enum fsm {
 		MAIN_MENU,
 		DISPLAY_MENU,
@@ -248,6 +250,9 @@ int main() {
 						case 2:
 							cout << "3. button" << endl;
 							fs = DELETE_MENU;
+							amount_of_records = std::to_string(DB.Get_amount_of_records());
+							cout << amount_of_records;
+							deletemenu.update_amount(amount_of_records);
 							break;
 						case 3:
 							cout << "4. button" << endl;
@@ -360,8 +365,7 @@ int main() {
 		addmenu.draw(window);
 	}
 	if (fs == DELETE_MENU) {
-
-
+		 
 		window.display();
 		while (window.pollEvent(event)) {
 
@@ -390,6 +394,7 @@ int main() {
 					case 1:
 						cout << "2. button" << endl;
 						fs = MAIN_MENU;
+						
 						break;
 
 					}
