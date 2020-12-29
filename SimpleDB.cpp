@@ -11,6 +11,8 @@
 #include "AdditionMenu.h"
 #include "DeletionMenu.h"
 #include <Windows.h>
+#include "Textbox.cpp"
+
 using std::string;
 using std::vector;
 using std::cout;
@@ -20,24 +22,24 @@ using std::endl;
 class SimpleDB
 {
 private:
-	
-	
+
+
 	struct Dane_pola {
 		string wiek;
 		string PESEL;
 		string imie;
 		string nazwisko;
 		string liczba_500_plus;
-		
+
 	};
 	vector<Dane_pola> DB_in_prog;
-	
+
 public:
 	int Get_amount_of_records() {
 		return DB_in_prog.size();
 	}
 	void Read_DB() {
-		 int input_choose_rec;
+		int input_choose_rec;
 		cout << "Popatrz synek, masz sobie tyle rekordow do wybrania, ktory chcesz zobaczyc (wybierz liczbe mniejsza lub rowna od wyświetlonej i nacisnij enter) lub wcisnij 0 zeby wyjsc?" << endl;
 		cout << DB_in_prog.size() << endl;
 		cin >> input_choose_rec;
@@ -50,7 +52,7 @@ public:
 		if (input_choose_rec == 0) {
 			return;
 		}
-	
+
 		auto it = DB_in_prog[input_choose_rec - 1];
 		input_choose_rec = 0;
 		cout << "Pokazuje rekord...." << endl;
@@ -74,7 +76,7 @@ public:
 			cout << "nazwisko: ";
 			cout << it.nazwisko << endl;
 			break;
-		case 5:	
+		case 5:
 			cout << "liczba bombelkow: ";
 			cout << it.liczba_500_plus << endl;
 			break;
@@ -91,22 +93,22 @@ public:
 			cout << it.liczba_500_plus << endl;
 			break;
 		case 7:
-			
+
 			break;
 		}
 	};
-	void Write_Data() {
+	void Write_Data(string wiek, string PESEL, string imie, string nazwisko, string bomble) {
 		Dane_pola present_struct;
 		cout << "Podaj wiek" << endl;
-		cin >> present_struct.wiek;
+		 present_struct.wiek = wiek;
 		cout << "Podaj 11-cyfrowy PESEL" << endl;
-		cin >> present_struct.PESEL;
+		present_struct.PESEL = PESEL;
 		cout << "Podaj imie delikwenta" << endl;
-		cin >> present_struct.imie;
+		present_struct.imie = imie;
 		cout << "Podaj tez jego nazwisko" << endl;
-		cin >> present_struct.nazwisko;
+		present_struct.nazwisko = nazwisko;
 		cout << "Podaj tez liczbe bombelkow 500+" << endl;
-		cin >> present_struct.liczba_500_plus;
+		present_struct.liczba_500_plus = bomble;
 		cout << "Przetwarzam dane, prosze czekac...." << endl;
 		DB_in_prog.push_back(present_struct);
 		Sleep(1000);
@@ -117,7 +119,7 @@ public:
 		cout << "Witaj w nowym systemie informatycznym Pana Prezesa, PiSOS, sluzacemu jako baza danych potencjalnych wyborcow!" << endl;
 		cout << "System zostal przyrzadzony przez najlepszych informatykow, wiec baza za kazdym wlaczeniem zmienia kolejnosc rekordow" << endl;
 		cout << "Niechaj chwala bedzie Prezesowi!" << endl;
-		
+
 		std::fstream read_file("DB.txt");
 		if (!(read_file.peek() == std::ifstream::traits_type::eof()))
 		{
@@ -132,18 +134,18 @@ public:
 				string temp_nazw;
 				string temp_pes;
 				std::getline(read_file, temp_num);
-					
-				
+
+
 				std::getline(read_file, temp_pes);
-				
-				
+
+
 				std::getline(read_file, temp_imie);
-					
-				
+
+
 				std::getline(read_file, temp_nazw);
-				
+
 				std::getline(read_file, temp_500_pl);
-					
+
 				td.wiek = temp_num;
 				td.PESEL = temp_pes;
 				td.imie = temp_imie;
@@ -158,7 +160,7 @@ public:
 		if (remove("DB.txt") != 0)
 			perror("File deletion failed");
 		else
-			cout <<'\n' ;
+			cout << '\n';
 
 	}
 
@@ -182,9 +184,9 @@ public:
 		int field_num;
 		cout << "ktory rekord chcesz wywalic? (polecam najpierw sprawdzic ich zawartosc coby niespodzianek nie bylo!" << endl;
 		cin >> field_num;
-		DB_in_prog.erase(DB_in_prog.begin() + field_num-1);
+		DB_in_prog.erase(DB_in_prog.begin() + field_num - 1);
 	};
-	
+
 	vector<struct Dane_pola> Search(string) {
 
 	};
@@ -211,12 +213,12 @@ int main() {
 	fsm fs = MAIN_MENU;
 	sf::RenderWindow window{ sf::VideoMode{800, 600}, "PiSOS v.21.37" };
 	sf::Event event;
-		DeletionMenu deletemenu(window.getSize().x, window.getSize().y);
-		AdditionMenu addmenu(window.getSize().x, window.getSize().y);
-		MainMenu mainmenu(window.getSize().x, window.getSize().y);
-		DBDisplayMenu displaymenu(window.getSize().x, window.getSize().y);
-		while (window.isOpen()) {
-			if (fs == MAIN_MENU) {
+
+
+	MainMenu mainmenu(window.getSize().x, window.getSize().y);
+
+	while (window.isOpen()) {
+		if (fs == MAIN_MENU) {
 			window.display();
 			while (window.pollEvent(event)) {
 
@@ -252,7 +254,7 @@ int main() {
 							fs = DELETE_MENU;
 							amount_of_records = std::to_string(DB.Get_amount_of_records());
 							cout << amount_of_records;
-							deletemenu.update_amount(amount_of_records);
+
 							break;
 						case 3:
 							cout << "4. button" << endl;
@@ -267,152 +269,353 @@ int main() {
 
 				}
 
-			}	
-			
+			}
+
 			window.clear();
 			mainmenu.draw(window);
 		}
-		
 
-	if (fs == DISPLAY_MENU) {
-		
-		
-			window.display();
-			while (window.pollEvent(event)) {
 
-				switch (event.type) {
-				case sf::Event::Closed:
-					window.close();
-					break;
+		if (fs == DISPLAY_MENU) {
+			DBDisplayMenu displaymenu(window.getSize().x, window.getSize().y);
+			while (fs == DISPLAY_MENU) {
+				window.display();
+				while (window.pollEvent(event)) {
 
-				case sf::Event::KeyReleased:
-					switch (event.key.code)
-					{
-					case sf::Keyboard::Up:
-						displaymenu.MoveUp();
+					switch (event.type) {
+					case sf::Event::Closed:
+						window.close();
 						break;
 
-					case sf::Keyboard::Down:
-						displaymenu.MoveDown();
-						break;
-					case sf::Keyboard::Return:
-						switch (displaymenu.GetPressedItem())
+					case sf::Event::KeyReleased:
+						switch (event.key.code)
 						{
-						case 0:
-							cout << "1. button in displaymenu" << endl;
-							DB.Read_DB();
+						case sf::Keyboard::Up:
+							displaymenu.MoveUp();
 							break;
-						case 1:
-							cout << "2. button" << endl;
-							fs = MAIN_MENU;
+
+						case sf::Keyboard::Down:
+							displaymenu.MoveDown();
 							break;
+						case sf::Keyboard::Return:
+							switch (displaymenu.GetPressedItem())
+							{
+							case 0:
+								cout << "1. button in displaymenu" << endl;
+								DB.Read_DB();
+								break;
+							case 1:
+								cout << "2. button" << endl;
+								fs = MAIN_MENU;
+								break;
+
+							}
+							break;
+						}
+
+
+
+					}
+
+				}
+				window.clear();
+				displaymenu.draw(window);
+
+			}
+		}
+
+		if (fs == ADD_MENU) {
+			AdditionMenu addmenu(window.getSize().x, window.getSize().y);
+			
+			out_of_loop:
+			while (fs == ADD_MENU) {
+				window.clear();
+
+				addmenu.draw(window);
+				addmenu.imie.drawTo(window);
+				addmenu.nazwisko.drawTo(window);
+				addmenu.PESEL.drawTo(window);
+				addmenu.wiek.drawTo(window);
+				addmenu.bomble.drawTo(window);
+				window.display();
+				while (window.pollEvent(event)) {
+
+					switch (event.type) {
+					case sf::Event::Closed:
+						window.close();
+						break;
+
+					case sf::Event::KeyReleased:
+						switch (event.key.code)
+						{
+						case sf::Keyboard::Up:
+							addmenu.MoveUp();
+							break;
+
+						case sf::Keyboard::Down:
+							addmenu.MoveDown();
+							break;
+						case sf::Keyboard::Return:
+							switch (addmenu.GetPressedItem())
+							{
+							case 2:
+								cout << "2. button" << endl;
+								fs = MAIN_MENU;
+
+								break;
+							case 1:
+								cout << "Zapis" << endl;
+								DB.Write_Data(addmenu.imie.getText(),
+									addmenu.nazwisko.getText(),
+									addmenu.PESEL.getText(),
+									addmenu.wiek.getText(),
+									addmenu.bomble.getText());
+								fs = MAIN_MENU;
+								break;
+							case 0:
+								cout << "1. button in displaymenu" << endl;
+								addmenu.SwitchToInput();
+								window.clear();
+								addmenu.draw(window);
+								window.display();
+								
+								while (1) {
+									window.clear();
+									addmenu.draw(window);
+									addmenu.imie.drawTo(window);
+									addmenu.nazwisko.drawTo(window);
+									addmenu.PESEL.drawTo(window);
+									addmenu.wiek.drawTo(window);
+									addmenu.bomble.drawTo(window);
+									window.display();
+									while(window.pollEvent(event)){
+									window.clear();
+									addmenu.draw(window);
+									window.display();
+									switch (event.type) {
+									case sf::Event::KeyReleased:
+										switch (event.key.code)
+										{
+										case sf::Keyboard::Up:
+											addmenu.MoveUpSecondRow();
+											break;
+
+										case sf::Keyboard::Down:
+											addmenu.MoveDownSecondRow();
+											break;
+										case sf::Keyboard::Escape:
+											addmenu.SwitchBack();
+											goto out_of_loop;
+										case sf::Keyboard::Return:
+											switch (addmenu.GetSecondRowIndex())
+											{
+
+											case 0:
+												addmenu.imie.setSelected(true);
+												addmenu.imie.drawTo(window);
+												window.display();
+												while (addmenu.imie.getSelection()) {
+													while (window.pollEvent(event))
+													{
+														switch (event.type) {
+														case sf::Event::TextEntered:
+															addmenu.imie.typedOn(event);
+															window.clear();
+															addmenu.imie.drawTo(window);
+															addmenu.nazwisko.drawTo(window);
+															addmenu.PESEL.drawTo(window);
+															addmenu.wiek.drawTo(window);
+															addmenu.bomble.drawTo(window);
+															addmenu.draw(window);
+															window.display();
+														case sf::Event::KeyReleased:
+															if (event.key.code == sf::Keyboard::End) {
+
+																addmenu.imie.setSelected(false);
+															}
+														}
+													}
+												}
+												break;
+											case 1:
+												addmenu.nazwisko.setSelected(true);
+												addmenu.nazwisko.drawTo(window);
+												window.display();
+												while (addmenu.nazwisko.getSelection()) {
+													while (window.pollEvent(event))
+													{
+														switch (event.type) {
+														case sf::Event::TextEntered:
+															addmenu.nazwisko.typedOn(event);
+															window.clear();
+															addmenu.imie.drawTo(window);
+															addmenu.nazwisko.drawTo(window);
+															addmenu.PESEL.drawTo(window);
+															addmenu.wiek.drawTo(window);
+															addmenu.bomble.drawTo(window);
+															addmenu.draw(window);
+															window.display();
+														case sf::Event::KeyReleased:
+															if (event.key.code == sf::Keyboard::End) {
+
+																addmenu.nazwisko.setSelected(false);
+															}
+														}
+													}
+												}
+												break;
+											case 2:
+												addmenu.PESEL.setSelected(true);
+												addmenu.PESEL.drawTo(window);
+												window.display();
+												while (addmenu.PESEL.getSelection()) {
+													while (window.pollEvent(event))
+													{
+														switch (event.type) {
+														case sf::Event::TextEntered:
+															addmenu.PESEL.typedOn(event);
+															window.clear();
+															addmenu.imie.drawTo(window);
+															addmenu.nazwisko.drawTo(window);
+															addmenu.PESEL.drawTo(window);
+															addmenu.wiek.drawTo(window);
+															addmenu.bomble.drawTo(window);
+															addmenu.draw(window);
+															window.display();
+														case sf::Event::KeyReleased:
+															if (event.key.code == sf::Keyboard::End) {
+
+																addmenu.PESEL.setSelected(false);
+															}
+														}
+													}
+												}
+												break;
+											case 3:
+												addmenu.wiek.setSelected(true);
+												addmenu.wiek.drawTo(window);
+												window.display();
+												while (addmenu.wiek.getSelection()) {
+													while (window.pollEvent(event))
+													{
+														switch (event.type) {
+														case sf::Event::TextEntered:
+															addmenu.wiek.typedOn(event);
+															window.clear();
+															addmenu.imie.drawTo(window);
+															addmenu.nazwisko.drawTo(window);
+															addmenu.PESEL.drawTo(window);
+															addmenu.wiek.drawTo(window);
+															addmenu.bomble.drawTo(window);
+															addmenu.draw(window);
+															window.display();
+														case sf::Event::KeyReleased:
+															if (event.key.code == sf::Keyboard::End) {
+
+																addmenu.wiek.setSelected(false);
+															}
+														}
+													}
+												}
+												break;
+											case 4:
+												addmenu.bomble.setSelected(true);
+												addmenu.bomble.drawTo(window);
+												window.display();
+												while (addmenu.bomble.getSelection()) {
+													while (window.pollEvent(event))
+													{
+														switch (event.type) {
+														case sf::Event::TextEntered:
+															addmenu.bomble.typedOn(event);
+															window.clear();
+															addmenu.imie.drawTo(window);
+															addmenu.nazwisko.drawTo(window);
+															addmenu.PESEL.drawTo(window);
+															addmenu.wiek.drawTo(window);
+															addmenu.bomble.drawTo(window);
+															addmenu.draw(window);
+															window.display();
+														case sf::Event::KeyReleased:
+															if (event.key.code == sf::Keyboard::End) {
+
+																addmenu.bomble.setSelected(false);
+															}
+														}
+													}
+												}
+											}
+												
+											}
+										}
+										//DB.Write_Data();
+										
+
+
+									}
+
+								}
+
+							}
+
+							
 
 						}
-						break;
 					}
-
-
-
+					
 				}
-
 			}
-			window.clear();
-			displaymenu.draw(window);
-		}	
-	if (fs == ADD_MENU) {
-
-
-		window.display();
-		while (window.pollEvent(event)) {
-
-			switch (event.type) {
-			case sf::Event::Closed:
-				window.close();
-				break;
-
-			case sf::Event::KeyReleased:
-				switch (event.key.code)
-				{
-				case sf::Keyboard::Up:
-					addmenu.MoveUp();
-					break;
-
-				case sf::Keyboard::Down:
-					addmenu.MoveDown();
-					break;
-				case sf::Keyboard::Return:
-					switch (addmenu.GetPressedItem())
-					{
-					case 0:
-						cout << "1. button in displaymenu" << endl;
-						DB.Write_Data();
-						break;
-					case 1:
-						cout << "2. button" << endl;
-						fs = MAIN_MENU;
-						break;
-
-					}
-					break;
-				}
-
-
-
-			}
-
 		}
-		window.clear();
-		addmenu.draw(window);
-	}
-	if (fs == DELETE_MENU) {
-		 
-		window.display();
-		while (window.pollEvent(event)) {
+				if (fs == DELETE_MENU) {
+					DeletionMenu deletemenu(window.getSize().x, window.getSize().y);
+					deletemenu.update_amount(amount_of_records);
+					while (fs == DELETE_MENU) {
+						window.display();
+						while (window.pollEvent(event)) {
 
-			switch (event.type) {
-			case sf::Event::Closed:
-				window.close();
-				break;
+							switch (event.type) {
+							case sf::Event::Closed:
+								window.close();
+								break;
 
-			case sf::Event::KeyReleased:
-				switch (event.key.code)
-				{
-				case sf::Keyboard::Up:
-					deletemenu.MoveUp();
-					break;
+							case sf::Event::KeyReleased:
+								switch (event.key.code)
+								{
+								case sf::Keyboard::Up:
+									deletemenu.MoveUp();
+									break;
 
-				case sf::Keyboard::Down:
-					deletemenu.MoveDown();
-					break;
-				case sf::Keyboard::Return:
-					switch (deletemenu.GetPressedItem())
-					{
-					case 0:
-						cout << "1. button in deletemenu" << endl;
-						DB.Delete();
-						break;
-					case 1:
-						cout << "2. button" << endl;
-						fs = MAIN_MENU;
-						
-						break;
+								case sf::Keyboard::Down:
+									deletemenu.MoveDown();
+									break;
+								case sf::Keyboard::Return:
+									switch (deletemenu.GetPressedItem())
+									{
+									case 0:
+										cout << "1. button in deletemenu" << endl;
+										DB.Delete();
+										break;
+									case 1:
+										cout << "2. button" << endl;
+										fs = MAIN_MENU;
 
+										break;
+
+									}
+									break;
+								}
+
+
+
+							}
+
+						}
+						window.clear();
+						deletemenu.draw(window);
 					}
-					break;
 				}
-
-
-
 			}
-
+			return 0;
 		}
-		window.clear();
-		deletemenu.draw(window);
-	}
 	
-}
-
-	
-
-	return 0;
-}
+			

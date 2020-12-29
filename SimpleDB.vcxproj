@@ -150,12 +150,14 @@
     <ClCompile Include="DeletionMenu.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="SimpleDB.cpp" />
+    <ClCompile Include="Textbox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdditionMenu.h" />
     <ClInclude Include="DBDisplayMenu.h" />
     <ClInclude Include="DeletionMenu.h" />
     <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="Textbox.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
