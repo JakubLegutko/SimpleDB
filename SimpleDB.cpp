@@ -21,9 +21,9 @@ using std::endl;
 
 class SimpleDB
 {
-private:
 
 
+public:
 	struct Dane_pola {
 		string wiek;
 		string PESEL;
@@ -32,22 +32,20 @@ private:
 		string liczba_500_plus;
 
 	};
-	vector<Dane_pola> DB_in_prog;
 
-public:
+	
 	int Get_amount_of_records() {
 		return DB_in_prog.size();
 	}
-	void Read_DB() {
-		int input_choose_rec;
+	void Read_DB(int input_choose_rec, string &wiek, string &pesel, string &imie, string &nazwisko, string &bomble) {
+		
 		cout << "Popatrz synek, masz sobie tyle rekordow do wybrania, ktory chcesz zobaczyc (wybierz liczbe mniejsza lub rowna od wyświetlonej i nacisnij enter) lub wcisnij 0 zeby wyjsc?" << endl;
 		cout << DB_in_prog.size() << endl;
-		cin >> input_choose_rec;
+		
 		while (cin.fail() || input_choose_rec > DB_in_prog.size() || input_choose_rec < 0) {
-			std::cout << "Error" << std::endl;
-			std::cin.clear();
-			std::cin.ignore(256, '\n');
-			std::cin >> input_choose_rec;
+			std::cout << "Error - no such record" << std::endl;
+			return;
+			
 		}
 		if (input_choose_rec == 0) {
 			return;
@@ -56,31 +54,12 @@ public:
 		auto it = DB_in_prog[input_choose_rec - 1];
 		input_choose_rec = 0;
 		cout << "Pokazuje rekord...." << endl;
-		cout << "1- wiek, 2- pesel, 3-imie, 4-nazwisko, 5-bombelki,6 wszystko, 7- nie chce juz nic wypisywac, zabierz mnie stad :c" << endl;
-		int input_choose_field;
-		cin >> input_choose_field;
-		switch (input_choose_field) {
-		case 1:
-			cout << "wiek: ";
-			cout << it.wiek << endl;
-			break;
-		case 2:
-			cout << "PESEL: ";
-			cout << it.PESEL << endl;
-			break;
-		case 3:
-			cout << "imie: ";
-			cout << it.imie << endl;
-			break;
-		case 4:
-			cout << "nazwisko: ";
-			cout << it.nazwisko << endl;
-			break;
-		case 5:
-			cout << "liczba bombelkow: ";
-			cout << it.liczba_500_plus << endl;
-			break;
-		case 6:
+		
+		wiek = it.wiek;
+		pesel = it.PESEL;
+		imie = it.imie;
+		nazwisko = it.nazwisko;
+		bomble = it.liczba_500_plus;
 			cout << "wiek: ";
 			cout << it.wiek << endl;
 			cout << "PESEL: ";
@@ -91,11 +70,12 @@ public:
 			cout << it.nazwisko << endl;
 			cout << "liczba bombelkow: ";
 			cout << it.liczba_500_plus << endl;
-			break;
+			/*break;
 		case 7:
 
-			break;
-		}
+			break;*/
+		//}
+			
 	};
 	void Write_Data(string wiek, string PESEL, string imie, string nazwisko, string bomble) {
 		Dane_pola present_struct;
@@ -180,17 +160,21 @@ public:
 		out_file.close();
 		exit(0);
 	}
-	void Delete() {
-		int field_num;
+	void Delete(int field_num) {
+		
 		cout << "ktory rekord chcesz wywalic? (polecam najpierw sprawdzic ich zawartosc coby niespodzianek nie bylo!" << endl;
-		cin >> field_num;
-		DB_in_prog.erase(DB_in_prog.begin() + field_num - 1);
+		if (!(field_num > DB_in_prog.size() || field_num < 0))
+			DB_in_prog.erase(DB_in_prog.begin() + field_num - 1);
+		else cout << "No such record!" << endl;
 	};
 
 	vector<struct Dane_pola> Search(string) {
 
 	};
+	private:
 
+
+		vector<Dane_pola> DB_in_prog;
 };
 
 //SimpleDB::SimpleDB()
@@ -278,6 +262,11 @@ int main() {
 
 		if (fs == DISPLAY_MENU) {
 			DBDisplayMenu displaymenu(window.getSize().x, window.getSize().y);
+		
+			amount_of_records = std::to_string(DB.Get_amount_of_records());
+			int record_to_display;
+			bool been_in_choice = false;
+			displaymenu.update_amount(amount_of_records);
 			while (fs == DISPLAY_MENU) {
 				window.display();
 				while (window.pollEvent(event)) {
@@ -301,10 +290,67 @@ int main() {
 							switch (displaymenu.GetPressedItem())
 							{
 							case 0:
-								cout << "1. button in displaymenu" << endl;
-								DB.Read_DB();
+								cout << "0. button in displaymenu" << endl;
+								if (been_in_choice) {
+									string wiek;
+									string PESEL;
+									string imie;
+									string nazwisko;
+									string bomble;
+							
+									DB.Read_DB(record_to_display,wiek,PESEL,imie,nazwisko,bomble);
+									displaymenu.display[0].setString(imie);
+									displaymenu.display[1].setString(nazwisko);
+									displaymenu.display[2].setString(PESEL);
+									displaymenu.display[3].setString(wiek);
+									displaymenu.display[4].setString(bomble);
+									been_in_choice = false;
+									window.clear();
+									
+									displaymenu.wybor.drawTo(window);
+									displaymenu.draw(window);
+									window.display();
+								}
+								else {
+									cout << "Choice not made yet" << endl;
+								}
 								break;
 							case 1:
+								cout << "1. button in displaymenu" << endl;
+								//DB.Read_DB();
+								//break;
+							
+								displaymenu.wybor.setSelected(true);
+								displaymenu.wybor.drawTo(window);
+								window.display();
+								
+								while (displaymenu.wybor.getSelection()) {
+							
+									while (window.pollEvent(event))
+									{
+										switch (event.type) {
+										case sf::Event::TextEntered:
+											window.clear();
+											displaymenu.wybor.typedOn(event);
+											displaymenu.draw(window);
+											displaymenu.wybor.drawTo(window);
+											window.display();
+										case sf::Event::KeyReleased:
+											if (event.key.code == sf::Keyboard::End) {
+
+												displaymenu.wybor.setSelected(false);
+												
+												if (!(displaymenu.wybor.getText() == "")) record_to_display = std::stoi(displaymenu.wybor.getText());
+												else record_to_display = 0;
+												
+												been_in_choice = true;
+											}
+										}
+									}
+								}
+								break;
+							case 2:
+
 								cout << "2. button" << endl;
 								fs = MAIN_MENU;
 								break;
@@ -320,7 +366,7 @@ int main() {
 				}
 				window.clear();
 				displaymenu.draw(window);
-
+				displaymenu.wybor.drawTo(window);
 			}
 		}
 
@@ -548,7 +594,7 @@ int main() {
 												
 											}
 										}
-										//DB.Write_Data();
+										
 										
 
 
@@ -593,7 +639,13 @@ int main() {
 									{
 									case 0:
 										cout << "1. button in deletemenu" << endl;
-										DB.Delete();
+										if (DB.Get_amount_of_records() > 0) {
+
+											DB.Delete(1);
+										}
+										else cout << "Nothing to delete" << endl;
+										amount_of_records = std::to_string(DB.Get_amount_of_records());
+										deletemenu.update_amount(amount_of_records);
 										break;
 									case 1:
 										cout << "2. button" << endl;
