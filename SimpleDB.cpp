@@ -37,7 +37,7 @@ public:
 	int Get_amount_of_records() {
 		return DB_in_prog.size();
 	}
-	void Read_DB(int input_choose_rec, string &wiek, string &pesel, string &imie, string &nazwisko, string &bomble) {
+	void Read_DB(int input_choose_rec, string &imie, string &nazwisko, string &pesel, string &wiek, string &bomble) {
 		
 		cout << "Popatrz synek, masz sobie tyle rekordow do wybrania, ktory chcesz zobaczyc (wybierz liczbe mniejsza lub rowna od wyświetlonej i nacisnij enter) lub wcisnij 0 zeby wyjsc?" << endl;
 		cout << DB_in_prog.size() << endl;
@@ -54,20 +54,19 @@ public:
 		auto it = DB_in_prog[input_choose_rec - 1];
 		input_choose_rec = 0;
 		cout << "Pokazuje rekord...." << endl;
-		
-		wiek = it.wiek;
-		pesel = it.PESEL;
 		imie = it.imie;
 		nazwisko = it.nazwisko;
+		wiek = it.wiek;
+		pesel = it.PESEL;
 		bomble = it.liczba_500_plus;
-			cout << "wiek: ";
-			cout << it.wiek << endl;
-			cout << "PESEL: ";
-			cout << it.PESEL << endl;
 			cout << "imie: ";
 			cout << it.imie << endl;
 			cout << "nazwisko: ";
 			cout << it.nazwisko << endl;
+			cout << "PESEL: ";
+			cout << it.PESEL << endl;
+			cout << "wiek: ";
+			cout << it.wiek << endl;
 			cout << "liczba bombelkow: ";
 			cout << it.liczba_500_plus << endl;
 			/*break;
@@ -77,16 +76,16 @@ public:
 		//}
 			
 	};
-	void Write_Data(string wiek, string PESEL, string imie, string nazwisko, string bomble) {
+	void Write_Data(string imie , string nazwisko, string PESEL, string wiek, string bomble) {
 		Dane_pola present_struct;
-		cout << "Podaj wiek" << endl;
-		 present_struct.wiek = wiek;
-		cout << "Podaj 11-cyfrowy PESEL" << endl;
-		present_struct.PESEL = PESEL;
 		cout << "Podaj imie delikwenta" << endl;
-		present_struct.imie = imie;
+		 present_struct.imie = imie;
 		cout << "Podaj tez jego nazwisko" << endl;
 		present_struct.nazwisko = nazwisko;
+		cout << "Podaj 11-cyfrowy PESEL" << endl;
+		present_struct.PESEL = PESEL;
+		cout << "Podaj wiek" << endl;
+		present_struct.wiek = wiek;
 		cout << "Podaj tez liczbe bombelkow 500+" << endl;
 		present_struct.liczba_500_plus = bomble;
 		cout << "Przetwarzam dane, prosze czekac...." << endl;
@@ -99,6 +98,7 @@ public:
 		cout << "Witaj w nowym systemie informatycznym Pana Prezesa, PiSOS, sluzacemu jako baza danych potencjalnych wyborcow!" << endl;
 		cout << "System zostal przyrzadzony przez najlepszych informatykow, wiec baza za kazdym wlaczeniem zmienia kolejnosc rekordow" << endl;
 		cout << "Niechaj chwala bedzie Prezesowi!" << endl;
+		cout << "Rekordu nie trzeba uzupelniac do konca, ale bombelki musza byc!!!" << endl;
 
 		std::fstream read_file("DB.txt");
 		if (!(read_file.peek() == std::ifstream::traits_type::eof()))
@@ -113,23 +113,23 @@ public:
 				string temp_imie;
 				string temp_nazw;
 				string temp_pes;
-				std::getline(read_file, temp_num);
+				std::getline(read_file, temp_imie);
+
+
+				std::getline(read_file, temp_nazw );
 
 
 				std::getline(read_file, temp_pes);
 
 
-				std::getline(read_file, temp_imie);
-
-
-				std::getline(read_file, temp_nazw);
+				std::getline(read_file, temp_num);
 
 				std::getline(read_file, temp_500_pl);
 
-				td.wiek = temp_num;
-				td.PESEL = temp_pes;
 				td.imie = temp_imie;
 				td.nazwisko = temp_nazw;
+				td.PESEL = temp_pes;
+				td.wiek = temp_num;
 				td.liczba_500_plus = temp_500_pl;
 				if (!(temp_500_pl == ""))
 					DB_in_prog.push_back(td);
@@ -149,10 +149,10 @@ public:
 		out_file.open("DB.txt");
 		while (DB_in_prog.size()) {
 			Dane_pola it = DB_in_prog.back();
-			out_file << it.wiek << endl;
-			out_file << it.PESEL << endl;
 			out_file << it.imie << endl;
 			out_file << it.nazwisko << endl;
+			out_file << it.PESEL << endl;
+			out_file << it.wiek << endl;
 			out_file << it.liczba_500_plus << endl;
 
 			DB_in_prog.pop_back();
@@ -177,13 +177,7 @@ public:
 		vector<Dane_pola> DB_in_prog;
 };
 
-//SimpleDB::SimpleDB()
-//{
-//}
 
-//SimpleDB::~SimpleDB()
-//{
-//	}
 int main() {
 	SimpleDB DB;
 	DB.Init();
@@ -197,7 +191,7 @@ int main() {
 	fsm fs = MAIN_MENU;
 	sf::RenderWindow window{ sf::VideoMode{800, 600}, "PiSOS v.21.37" };
 	sf::Event event;
-
+	
 
 	MainMenu mainmenu(window.getSize().x, window.getSize().y);
 
@@ -298,7 +292,7 @@ int main() {
 									string nazwisko;
 									string bomble;
 							
-									DB.Read_DB(record_to_display,wiek,PESEL,imie,nazwisko,bomble);
+									DB.Read_DB(record_to_display,imie,nazwisko,PESEL,wiek,bomble);
 									displaymenu.display[0].setString(imie);
 									displaymenu.display[1].setString(nazwisko);
 									displaymenu.display[2].setString(PESEL);
