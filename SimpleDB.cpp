@@ -95,9 +95,9 @@ public:
 	};
 	void Init() {
 		//LOAD DB
-		cout << "Witaj w nowym systemie informatycznym Pana Prezesa, PiSOS, sluzacemu jako baza danych potencjalnych wyborcow!" << endl;
+		cout << "Witaj w nowym systemie informatycznym, sluzacemu jako baza danych potencjalnych wyborcow!" << endl;
 		cout << "System zostal przyrzadzony przez najlepszych informatykow, wiec baza za kazdym wlaczeniem zmienia kolejnosc rekordow" << endl;
-		cout << "Niechaj chwala bedzie Prezesowi!" << endl;
+		
 		cout << "Rekordu nie trzeba uzupelniac do konca, ale bombelki musza byc!!!" << endl;
 
 		std::fstream read_file("DB.txt");
@@ -189,7 +189,7 @@ int main() {
 		DELETE_MENU
 	};
 	fsm fs = MAIN_MENU;
-	sf::RenderWindow window{ sf::VideoMode{800, 600}, "PiSOS v.21.37" };
+	sf::RenderWindow window{ sf::VideoMode{800, 600}, "OSSiP v.0.37" };
 	sf::Event event;
 	
 
