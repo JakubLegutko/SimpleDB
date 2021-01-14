@@ -69,11 +69,7 @@ public:
 			cout << it.wiek << endl;
 			cout << "liczba bombelkow: ";
 			cout << it.liczba_500_plus << endl;
-			/*break;
-		case 7:
-
-			break;*/
-		//}
+		
 			
 	};
 	void Write_Data(string imie , string nazwisko, string PESEL, string wiek, string bomble) {
@@ -168,9 +164,7 @@ public:
 		else cout << "No such record!" << endl;
 	};
 
-	vector<struct Dane_pola> Search(string) {
-
-	};
+	
 	private:
 
 
@@ -219,23 +213,23 @@ int main() {
 						switch (mainmenu.GetPressedItem())
 						{
 						case 0:
-							cout << "1. button" << endl;
+							cout << "1. button MainMenu-Display" << endl;
 							fs = DISPLAY_MENU;
 							cout << fs;
 							break;
 						case 1:
-							cout << "2. button" << endl;
+							cout << "2. button MainMenu-Add" << endl;
 							fs = ADD_MENU;
 							break;
 						case 2:
-							cout << "3. button" << endl;
+							cout << "3. button MainMenu-Delete" << endl;
 							fs = DELETE_MENU;
 							amount_of_records = std::to_string(DB.Get_amount_of_records());
 							cout << amount_of_records;
 
 							break;
 						case 3:
-							cout << "4. button" << endl;
+							cout << "4. button MainMenu -Exit" << endl;
 							window.close();
 							DB.Save_Exit();
 							break;
@@ -284,7 +278,7 @@ int main() {
 							switch (displaymenu.GetPressedItem())
 							{
 							case 0:
-								cout << "0. button in displaymenu" << endl;
+								cout << "1. button displaymenu-display" << endl;
 								if (been_in_choice) {
 									string wiek;
 									string PESEL;
@@ -310,9 +304,8 @@ int main() {
 								}
 								break;
 							case 1:
-								cout << "1. button in displaymenu" << endl;
-								//DB.Read_DB();
-								//break;
+								cout << "2. button in displaymenu-choose" << endl;
+								
 							
 								displaymenu.wybor.setSelected(true);
 								displaymenu.wybor.drawTo(window);
@@ -345,7 +338,7 @@ int main() {
 								break;
 							case 2:
 
-								cout << "2. button" << endl;
+								cout << "3. button in displaymenu-back to main" << endl;
 								fs = MAIN_MENU;
 								break;
 
@@ -399,12 +392,12 @@ int main() {
 							switch (addmenu.GetPressedItem())
 							{
 							case 2:
-								cout << "2. button" << endl;
+								cout << "3. button in add menu-back to main" << endl;
 								fs = MAIN_MENU;
 
 								break;
 							case 1:
-								cout << "Zapis" << endl;
+								cout << "2. button in add menu, save record" << endl;
 								DB.Write_Data(addmenu.imie.getText(),
 									addmenu.nazwisko.getText(),
 									addmenu.PESEL.getText(),
@@ -413,7 +406,7 @@ int main() {
 								fs = MAIN_MENU;
 								break;
 							case 0:
-								cout << "1. button in displaymenu" << endl;
+								cout << "1. button in add menu-move to add" << endl;
 								addmenu.SwitchToInput();
 								window.clear();
 								addmenu.draw(window);
@@ -642,7 +635,7 @@ int main() {
 										deletemenu.update_amount(amount_of_records);
 										break;
 									case 1:
-										cout << "2. button" << endl;
+										cout << "2. button in deletemenu- back to main" << endl;
 										fs = MAIN_MENU;
 
 										break;

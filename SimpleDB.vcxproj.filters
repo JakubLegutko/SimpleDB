@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Dokumentacja">
+      <UniqueIdentifier>{508add11-ccf9-47db-b5c4-d87505d67ca9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SimpleDB.cpp">
@@ -32,6 +35,27 @@
     </ClCompile>
     <ClCompile Include="Textbox.cpp">
       <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="AdditionMenu_D.cpp">
+      <Filter>Dokumentacja</Filter>
+    </ClCompile>
+    <ClCompile Include="DeletionMenu_D.cpp">
+      <Filter>Dokumentacja</Filter>
+    </ClCompile>
+    <ClCompile Include="DBDisplayMenu_D.cpp">
+      <Filter>Dokumentacja</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenu_D.cpp">
+      <Filter>Dokumentacja</Filter>
+    </ClCompile>
+    <ClCompile Include="Textbox_D.cpp">
+      <Filter>Dokumentacja</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleDB_D.cpp">
+      <Filter>Dokumentacja</Filter>
+    </ClCompile>
+    <ClCompile Include="MainLogic_D.cpp">
+      <Filter>Dokumentacja</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

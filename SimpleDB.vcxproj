@@ -147,10 +147,17 @@
   <ItemGroup>
     <ClCompile Include="AdditionMenu.cpp" />
     <ClCompile Include="DBDisplayMenu.cpp" />
+    <ClCompile Include="DBDisplayMenu_D.cpp" />
     <ClCompile Include="DeletionMenu.cpp" />
+    <ClCompile Include="MainLogic_D.cpp" />
     <ClCompile Include="MainMenu.cpp" />
+    <ClCompile Include="MainMenu_D.cpp" />
     <ClCompile Include="SimpleDB.cpp" />
+    <ClCompile Include="AdditionMenu_D.cpp" />
+    <ClCompile Include="DeletionMenu_D.cpp" />
+    <ClCompile Include="SimpleDB_D.cpp" />
     <ClCompile Include="Textbox.cpp" />
+    <ClCompile Include="Textbox_D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdditionMenu.h" />
