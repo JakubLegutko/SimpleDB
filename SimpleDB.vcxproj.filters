@@ -36,25 +36,25 @@
     <ClCompile Include="Textbox.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="AdditionMenu_D.cpp">
+    <ClCompile Include="Documentation\AdditionMenu_D.cpp">
       <Filter>Dokumentacja</Filter>
     </ClCompile>
-    <ClCompile Include="DeletionMenu_D.cpp">
+    <ClCompile Include="Documentation\DBDisplayMenu_D.cpp">
       <Filter>Dokumentacja</Filter>
     </ClCompile>
-    <ClCompile Include="DBDisplayMenu_D.cpp">
+    <ClCompile Include="Documentation\DeletionMenu_D.cpp">
       <Filter>Dokumentacja</Filter>
     </ClCompile>
-    <ClCompile Include="MainMenu_D.cpp">
+    <ClCompile Include="Documentation\MainLogic_D.cpp">
       <Filter>Dokumentacja</Filter>
     </ClCompile>
-    <ClCompile Include="Textbox_D.cpp">
+    <ClCompile Include="Documentation\MainMenu_D.cpp">
       <Filter>Dokumentacja</Filter>
     </ClCompile>
-    <ClCompile Include="SimpleDB_D.cpp">
+    <ClCompile Include="Documentation\SimpleDB_D.cpp">
       <Filter>Dokumentacja</Filter>
     </ClCompile>
-    <ClCompile Include="MainLogic_D.cpp">
+    <ClCompile Include="Documentation\Textbox_D.cpp">
       <Filter>Dokumentacja</Filter>
     </ClCompile>
   </ItemGroup>
