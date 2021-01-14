@@ -1,5 +1,7 @@
 /*The program uses SFML as its graphics library to generate the GUI
 The original program was going to be a game, but turned out a database.
+
+
 Program Logic:
 
 In order to implement GUI I decided to use an FSM to navigate between windows (enum fsm).
@@ -7,6 +9,8 @@ The fsm is set to Main Menu at start time just after SimpleDB.Init is called,
 then the window is rendered and Main Menu Logic starts.
 As long as the window remains open, the event queue is checked for triggers, if appropriate trigger is
 found, action is taken based on its type.
+
+
 
 Main Menu Logic:
 
@@ -16,15 +20,30 @@ else if the Enter key is pressed, based on the current position, the appropriate
 if Exit is the current selection, SimpleDB.Save_Exit is called and the program terminates.
 
 
-Display Menu Logic:
 
+
+Display Menu Logic:
 This mostly works like the menu above, with the exception of the been_in_choice check, which makes sure
 that before an entity is displayed, new input has been placed in the wybor Textbox.
 The textbox can be accesed with the Enter key, and exited with the Esc key.
 
+	Read Logic:
+	case display button is pressed and a choice has been made (been_in_choice== true, Textbox contains input), 
+	a temporary set of strings is created to hold record, the SimpleDB.Read_DB is called, and 
+	the record number from Textbox, and handles to the strings are passed as arguments. Then, the display boxes
+	display the content read into the temporary strings and been_in_choice is set to false.
+
+
+
 Add Menu Logic:
 Works like main menu, but has additional loop which facilitates input of data to record, to navigate out
 of input, the Esc key needs to be pressed, to go back to the primary row, End key needs to be pressed.
+
+	Add Logic:
+	After input has been made in textboxes, and Save button is pressed, SimpleDB.Write_Data is called with
+	Textbox values as arguments.
+
+
 
 Delete Menu Logic:
 Works like main menu, only addition is a field to display the current amount of records available,
