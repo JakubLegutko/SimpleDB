@@ -156,6 +156,7 @@
     <ClCompile Include="Documentation\SimpleDB_D.cpp" />
     <ClCompile Include="Documentation\Textbox_D.cpp" />
     <ClCompile Include="MainMenu.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="SimpleDB.cpp" />
     <ClCompile Include="Textbox.cpp" />
   </ItemGroup>

@@ -4,7 +4,7 @@
 #include <sstream>
 #include <SFML/Graphics.hpp>
 
-// Define keys:
+
 #define DELETE_KEY 8
 #define ENTER_KEY 13
 #define ESCAPE_KEY 27
@@ -16,14 +16,14 @@ public:
 		textbox.setFillColor(color);
 		isSelected = sel;
 
-		// Check if the textbox is selected upon creation and display it accordingly:
+		
 		if (isSelected)
 			textbox.setString("_");
 		else
 			textbox.setString("");
 	}
 
-	// Make sure font is passed by reference:
+	
 	void setFont(sf::Font& fonts) {
 		textbox.setFont(fonts);
 	}
@@ -32,7 +32,7 @@ public:
 		textbox.setPosition(point);
 	}
 
-	// Set char limits:
+	
 	void setLimit(bool ToF) {
 		hasLimit = ToF;
 	}
@@ -42,11 +42,11 @@ public:
 		limit = lim - 1;
 	}
 
-	// Change selected state:
+	
 	void setSelected(bool sel) {
 		isSelected = sel;
 
-		// If not selected, remove the '_' at the end:
+		
 		if (!sel) {
 			std::string t = text.str();
 			std::string newT = "";
@@ -75,7 +75,7 @@ public:
 			// Only allow normal inputs:
 			if (charTyped < 128) {
 				if (hasLimit) {
-					// If there's a limit, don't go over it:
+					
 					if (text.str().length() <= limit) {
 						inputLogic(charTyped);
 					}
