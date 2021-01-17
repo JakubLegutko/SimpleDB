@@ -3,10 +3,8 @@
 
 MainMenu::MainMenu(float width, float height)
 {
-	if (!font.loadFromFile("CreamySunset.ttf"))
-	{
-		//handle erorr
-}
+	if (!font.loadFromFile("CreamySunset.ttf")) font.loadFromFile("C:\Windows\Fonts\Arial.ttf");//Case font is not found, use windows arial font
+	//Initialize text fields
 	text[0].setFillColor(sf::Color::Green);
 	text[0].setFont(font);
 	text[0].setString("Odczytaj Baze");
