@@ -35,7 +35,9 @@ bld/
 
 # Visual Studio 2017 auto generated files
 Generated\ Files/
-
+html\
+latex\
+man\
 # MSTest test Results
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
@@ -340,3 +342,6 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 **/DB.txt
+/Documentation/html
+/Documentation/latex
+*.3

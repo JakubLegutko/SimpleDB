@@ -2,6 +2,7 @@
 #include "SFML/Graphics.hpp"
 #include "Textbox.cpp"
 #define MAX_MENU_ITEMS 3
+
 class AdditionMenu
 {
 
@@ -10,7 +11,6 @@ public:
 	~AdditionMenu();
 
 	
-
 	
 	
 	Textbox imie{ 20, sf::Color::White, false };
@@ -21,7 +21,13 @@ public:
 	void draw(sf::RenderWindow& window);
 	void MoveUp();
 	void MoveDown();
+	/**
+	 * \brief returns currently selected field number in the first row
+	 * 
+	 * \return returns currently selected field number
+	 */
 	int GetPressedItem();
+	
 	void SwitchToInput();
 	void SwitchBack();
 	void MoveUpSecondRow();
